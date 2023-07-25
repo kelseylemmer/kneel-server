@@ -48,7 +48,7 @@ def get_all_orders():
             m.price metal_price,
             st.style style,
             st.price style_price,
-            si.carets size,
+            si.carets carets,
             si.price size_price
         FROM Orders o
         JOIN Metals m ON m.id = o.metal_id
@@ -68,9 +68,9 @@ def get_all_orders():
         # Create an instance from the current row.
         order = Order(row['id'], row['metal_id'], row['style_id'],
                       row['size_id'])
-        metal = Metal(row['metal'], row['price'])
-        style = Style(row['style'], row['price'])
-        size = Size(row['carets'], row['price'])
+        metal = Metal(row['id'], row['metal'], row['metal_price'])
+        style = Style(row['id'], row['style'], row['style_price'])
+        size = Size(row['id'], row['carets'], row['size_price'])
 
         order.metal = metal.__dict__
         order.style = style.__dict__
