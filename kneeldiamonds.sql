@@ -31,6 +31,7 @@ CREATE TABLE `Orders`
     FOREIGN KEY(`size_id`) REFERENCES `Sizes`(`id`)
 );
 
+DROP TABLE Orders;
 
 
 
