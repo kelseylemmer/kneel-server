@@ -1,5 +1,4 @@
 import sqlite3
-
 from models import Metal
 
 METALS = [
@@ -32,9 +31,40 @@ METALS = [
 
 
 def get_all_metals():
-    return METALS
+    # Open a connection to the database
+    with sqlite3.connect("./kneeldiamonds.sqlite3") as conn:
 
-# Function with a single parameter
+        # Just use these. It's a Black Box.
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        SELECT
+            m.id,
+            m.metal,
+            m.price
+        FROM metals m
+        """)
+
+        # Initialize an empty list to hold all metal representations
+        metals = []
+
+        # Convert rows of data into a Python list
+        dataset = db_cursor.fetchall()
+
+        # Iterate list of data returned from database
+        for row in dataset:
+
+            # Create an metal instance from the current row.
+            # Note that the database fields are specified in
+            # exact order of the parameters defined in the
+            # Metal class above.
+            metal = Metal(row['id'], row['metal'], row['price'])
+
+            metals.append(metal.__dict__)
+
+    return metals
 
 
 def get_single_metal(id):
@@ -57,7 +87,7 @@ def update_metal(id, new_metal):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        UPDATE Metal
+        UPDATE Metals
             SET
                 metal = ?,
                 price = ?
@@ -68,9 +98,9 @@ def update_metal(id, new_metal):
         # Did the client send an `id` that exists?
         rows_affected = db_cursor.rowcount
 
-    if rows_affected == 0:
-        # Forces 404 response by main module
-        return False
-    else:
-        # Forces 204 response by main module
-        return True
+        if rows_affected == 0:
+            # Forces 404 response by main module
+            return False
+        else:
+            # Forces 204 response by main module
+            return True

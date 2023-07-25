@@ -39,6 +39,8 @@ INSERT INTO `Metals` VALUES (null, '14K Gold', 12420);
 INSERT INTO `Metals` VALUES (null, '24K Gold', 73640);
 INSERT INTO `Metals` VALUES (null, 'Platinum', 12589);
 INSERT INTO `Metals` VALUES (null, 'Palladium', 12410);
+INSERT INTO `Metals` VALUES (null, 'Nickle', 12410.45);
+
 
 INSERT INTO `Sizes` VALUES (null, 0.5, 40500);
 INSERT INTO `Sizes` VALUES (null, 0.75, 78200);
