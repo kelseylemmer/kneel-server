@@ -58,4 +58,20 @@ DROP TABLE Orders;
 
 SELECT * FROM Orders ORDER BY id DESC;
 
+SELECT
+    o.id,
+    o.metal_id,
+    o.style_id,
+    o.size_id,
+    m.metal metal,
+    m.price metal_price,
+    st.style style,
+    st.price style_price,
+    si.carets size,
+    si.price size_price
+FROM Orders o
+JOIN Metals m ON m.id = o.metal_id
+JOIN Styles st ON st.id = o.style_id
+JOIN Sizes si ON si.id = o.size_id
+
 

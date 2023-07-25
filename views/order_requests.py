@@ -1,5 +1,5 @@
 import sqlite3
-from models import Order
+from models import Order, Style, Size, Metal
 
 ORDERS = [
     {
@@ -43,8 +43,17 @@ def get_all_orders():
             o.id,
             o.metal_id,
             o.style_id,
-            o.size_id
-        FROM orders o
+            o.size_id,
+            m.metal metal,
+            m.price metal_price,
+            st.style style,
+            st.price style_price,
+            si.carets size,
+            si.price size_price
+        FROM Orders o
+        JOIN Metals m ON m.id = o.metal_id
+        JOIN Styles st ON st.id = o.style_id
+        JOIN Sizes si ON si.id = o.size_id
         """)
 
         # Initialize an empty list to hold all order representations
@@ -56,12 +65,16 @@ def get_all_orders():
     # Iterate list of data returned from database
     for row in dataset:
 
-        # Create an order instance from the current row.
-        # Note that the database fields are specified in
-        # exact order of the parameters defined in the
-        # Animal class above.
+        # Create an instance from the current row.
         order = Order(row['id'], row['metal_id'], row['style_id'],
                       row['size_id'])
+        metal = Metal(row['metal'], row['price'])
+        style = Style(row['style'], row['price'])
+        size = Size(row['carets'], row['price'])
+
+        order.metal = metal.__dict__
+        order.style = style.__dict__
+        order.size = size.__dict__
 
         orders.append(order.__dict__)
 
