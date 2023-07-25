@@ -56,5 +56,6 @@ DROP TABLE Styles;
 DROP TABLE Sizes;
 DROP TABLE Orders;
 
+SELECT * FROM Orders ORDER BY id DESC;
 
 
